@@ -2,6 +2,7 @@ package com.jspassigment2.jsp_assigment2;
 
 import com.jspassigment2.jsp_assigment2.annotation.Column;
 import com.jspassigment2.jsp_assigment2.annotation.Entity;
+import com.jspassigment2.jsp_assigment2.annotation.ForeignKey;
 import com.jspassigment2.jsp_assigment2.annotation.Id;
 import com.jspassigment2.jsp_assigment2.util.ConnectionHelper;
 import com.jspassigment2.jsp_assigment2.util.SQLConstant;
@@ -11,17 +12,22 @@ import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import java.util.Date;
 import java.util.Set;
 
 public class Migrate {
     public static void main(String[] args) {
-        Reflections reflections =new Reflections("com.example.assigment1.assigment");
+        /*Reflections reflections =new Reflections("com.jspassigment2.jsp_assigment2");
         Set<Class<?>> annotated = reflections.getTypesAnnotatedWith(Entity.class);
         for (Class<?> clazz :
                 annotated) {
             // thực hiện migrate cho class đó.
             doMigrate(clazz);
-        }
+        }*/
+        Date created_at = new Date();
+        System.out.println(created_at);
+
     }
 
     static void doMigrate(Class clazz) {
@@ -74,7 +80,18 @@ public class Migrate {
                     stringBuilder.append(SQLConstant.AUTO_INCREMENT);
                 }
             }
+            if (fields[i].isAnnotationPresent(ForeignKey.class)){
+                stringBuilder.append(SQLConstant.SPACE);
+                stringBuilder.append(SQLConstant.REFERENCES);
+                stringBuilder.append(SQLConstant.SPACE);
+                ForeignKey foreignKey = fields[i].getAnnotation(ForeignKey.class);
+                stringBuilder.append(foreignKey.referenceTable());
+                stringBuilder.append(SQLConstant.OPEN_PARENTHESES);
+                stringBuilder.append(foreignKey.referenceColumn());
+                stringBuilder.append(SQLConstant.CLOSE_PARENTHESES);
+            }
             stringBuilder.append(SQLConstant.COMMA);
+
         }
         stringBuilder.setLength(stringBuilder.length() - 1);
         stringBuilder.append(SQLConstant.CLOSE_PARENTHESES);

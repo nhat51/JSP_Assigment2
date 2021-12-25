@@ -1,7 +1,7 @@
 package com.jspassigment2.jsp_assigment2.controller;
 
-import com.example.assigment1.assigment.entity.Food;
-import com.example.assigment1.assigment.repository.JpaRepository;
+import com.jspassigment2.jsp_assigment2.entity.Food;
+import com.jspassigment2.jsp_assigment2.repository.JpaRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

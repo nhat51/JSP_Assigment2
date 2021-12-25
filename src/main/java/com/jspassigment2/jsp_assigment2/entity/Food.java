@@ -47,14 +47,13 @@ public class Food {
         this.categoryId = categoryId;
     }
 
-    public Food( String name, double price, String description, String thumbnail, int status, Date created_at, Date updated_at, int categoryId) {
+    public Food( String name, double price, String description, String thumbnail, int status, Date created_at, int categoryId) {
         this.name = name;
         this.price = price;
         this.description = description;
         this.thumbnail = thumbnail;
         this.status = status;
         this.created_at = created_at;
-        this.updated_at = updated_at;
         this.categoryId = categoryId;
     }
 

@@ -246,7 +246,7 @@ public class JpaRepository<T> {
                 field.setAccessible(true);
                 Column columnInformation = field.getDeclaredAnnotation(Column.class);
                 String columnName = columnInformation.name();
-                String columnType = columnInformation.name();
+                String columnType = columnInformation.type();
                 Object value = field.get(obj);
                 if (columnType.equals(SQLDataTypes.DATE)) {
                     Date date = (Date) value;

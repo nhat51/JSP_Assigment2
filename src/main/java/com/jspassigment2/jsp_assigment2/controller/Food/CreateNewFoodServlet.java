@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class CreateNewFoodServlet extends HttpServlet {
@@ -39,11 +40,19 @@ public class CreateNewFoodServlet extends HttpServlet {
             int categoryId = Integer.parseInt(req.getParameter("category"));
             Date created_at = new Date();
             Food product = new Food(Name, price, Description, Thumbnail, status, created_at, categoryId);
-            repositoryFood.save(product);
-            resp.sendRedirect("/admin/list");
+            if (product.isValid()) {
+                repositoryFood.save(product);
+                resp.sendRedirect("/admin/list");
+            }else {
+                HashMap<String,String> error = product.getError();
+                req.setAttribute("errors",error);
+                req.setAttribute("food",product);
+                req.getRequestDispatcher("/admin/Food/CreateFood.jsp").forward(req,resp);
+            }
 
         } catch (Exception ex) {
             resp.getWriter().println("Bad request");
+            resp.getWriter().println(ex.getMessage());
         }
     }
 }

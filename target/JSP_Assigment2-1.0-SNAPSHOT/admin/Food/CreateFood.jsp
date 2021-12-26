@@ -11,9 +11,17 @@
 --%>
 <%
   request.setCharacterEncoding("utf-8");
-  Food food = (Food) request.getAttribute("product");
-  food = new Food();
+  Food food = (Food) request.getAttribute("food");
+  HashMap<String, String> errors = (HashMap<String, String>) request.getAttribute("errors");
   ArrayList<Category> categories = (ArrayList<Category>) request.getAttribute("categories");
+
+  if (food == null){
+    food = new Food();
+  }
+  if (errors == null){
+    errors = new HashMap<>();
+  }
+
 %>
 
 <!DOCTYPE html>
@@ -53,46 +61,73 @@
           <div class="col-md-10">
             <!-- general form elements -->
             <div class="card card-primary">
+              <%
+                if (errors.size() > 0) {
+              %>
+              <span class="badge bg-danger">Vui lòng điền đúng và đầy đủ thông tin sản phẩm</span>
+              <%
+                }
+              %>
               <!-- form start -->
               <form action="/admin/create" method="post">
                 <div class="card-body">
-                  <%-- <div class="form-group" hidden>
-                     <label for="ID"> ID</label>
-                     <input type="text" name="ID" class="form-control" id="ID">
-                   </div>--%>
                   <div class="form-group">
                     <label for="ProductName">Product Name</label>
-                    <input type="text" name="name" class="form-control" <%= food.getName()%>  id="ProductName">
+                    <input type="text" name="name" class="form-control" value="<%= food.getName()%>" id="ProductName" required>
+                    <%
+                      if (errors.containsKey("name")) {
+                    %>
+                    <span class="badge bg-danger"><%= errors.get("name")%></span>
+                    <%
+                      }
+                    %>
                   </div>
                   <div class="form-group">
                     <label for="Description">Description</label>
-                    <input type="text" name="description" id="Description" <%= food.getDescription()%> class="form-control"  />
+                    <input type="text" name="description" id="Description" value="<%= food.getDescription()%>" class="form-control" required/>
                   </div>
                   <div class="form-group">
                     <label for="Price">Price</label>
-                    <input type="text" name="price" class="form-control" <%= food.getPrice()%>  id="Price">
+                    <input type="text" name="price" class="form-control" value="<%= food.getPrice()%>"   id="Price" required/>
+                    <%
+                      if (errors.containsKey("price")) {
+                    %>
+                    <span class="badge bg-danger"><%= errors.get("price")%></span>
+                    <%
+                      }
+                    %>
                   </div>
                   <div class="form-group">
                     <label for="Image">Image</label>
-                    <input type="text" name="image" class="form-control" <%= food.getThumbnail()%> id="Image">
+                    <input type="text" name="image" class="form-control" value="<%= food.getThumbnail()%>"  id="Image" required/>
+                    <%
+                      if (errors.containsKey("thumbnail")) {
+                    %>
+                    <span class="badge bg-danger"><%= errors.get("thumbnail")%></span>
+                    <%
+                      }
+                    %>
                   </div>
                   <div class="form-group">
                     <label for="Status">Status</label>
-                    <input type="number" name="status" class="form-control" <%= food.getStatus()%> id="Status">
+                    <select name="status" id="Status" class="form-control">
+                      <option value="1">Đang Bán</option>
+                      <option value="2">Dừng Bán</option>
+                      <option value="3">Đã Xóa</option>
+                    </select>
+                    <%--<input type="number" name="status" class="form-control" <%= food.getStatus()%> id="Status">--%>
                   </div>
                     <div class="form-group">
                       <label for="Category">Category</label>
-                      <select name="category" id="Category">
+                      <select name="category" id="Category" class="form-control" aria-label=".form-select-sm example">
                         <%
                           for (int i = 0; i < categories.size(); i++) {
-
                         %>
-                        <option value="<%= categories.get(i).getId()%>"><%= categories.get(i).getName()%></option>
+                        <option name="category" value="<%= categories.get(i).getId()%>"><%= categories.get(i).getName()%></option>
                         <%
                           }
                         %>
                       </select>
-                      <%--<input type="number" name="categoryId" class="form-control" <%= food.getCategoryId()%> id="categoryId">--%>
                     </div>
                 </div>
                 <!-- /.card-body -->

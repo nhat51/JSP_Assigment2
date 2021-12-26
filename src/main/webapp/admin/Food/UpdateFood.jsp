@@ -69,7 +69,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="Category">Category</label>
-                                        <select name="category" id="Category">
+                                        <select name="category" id="Category" class="form-control">
                                             <%
                                                 for (int i = 0; i < categories.size(); i++) {
 

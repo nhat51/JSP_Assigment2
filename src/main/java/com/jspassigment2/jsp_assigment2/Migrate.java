@@ -4,6 +4,8 @@ import com.jspassigment2.jsp_assigment2.annotation.Column;
 import com.jspassigment2.jsp_assigment2.annotation.Entity;
 import com.jspassigment2.jsp_assigment2.annotation.ForeignKey;
 import com.jspassigment2.jsp_assigment2.annotation.Id;
+import com.jspassigment2.jsp_assigment2.entity.Food;
+import com.jspassigment2.jsp_assigment2.repository.JpaRepository;
 import com.jspassigment2.jsp_assigment2.util.ConnectionHelper;
 import com.jspassigment2.jsp_assigment2.util.SQLConstant;
 import org.reflections.Reflections;
@@ -13,21 +15,34 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 public class Migrate {
     public static void main(String[] args) {
-        /*Reflections reflections =new Reflections("com.jspassigment2.jsp_assigment2");
+      /*  Reflections reflections =new Reflections("com.jspassigment2.jsp_assigment2");
         Set<Class<?>> annotated = reflections.getTypesAnnotatedWith(Entity.class);
         for (Class<?> clazz :
                 annotated) {
             // thực hiện migrate cho class đó.
             doMigrate(clazz);
-        }*/
-        Date created_at = new Date();
-        System.out.println(created_at);
-
+        }
+*/      try {
+            Date date = new Date();
+            JpaRepository<Food> foodJpaRepository = new JpaRepository<>(Food.class);
+            Food food = new Food("", 1200, "", "image", 1, date, 0);
+            if (food.isValid()) {
+                foodJpaRepository.save(food);
+            } else {
+                HashMap<String,String> error = food.getError();
+                for (Map.Entry<String,String> entry:
+                        error.entrySet()) {
+                    System.out.println(entry.getKey());
+                    System.out.println(entry.getValue());
+                }
+            }
+        }catch (Exception exception){
+            System.out.println(exception.getMessage());
+        }
     }
 
     static void doMigrate(Class clazz) {
@@ -80,7 +95,19 @@ public class Migrate {
                     stringBuilder.append(SQLConstant.AUTO_INCREMENT);
                 }
             }
+
+            stringBuilder.append(SQLConstant.COMMA);
+        }
+        stringBuilder.append(SQLConstant.COMMA);
+        stringBuilder.setLength(stringBuilder.length() - 1);
+        for (int i = 0; i < fields.length; i++){
+            String fieldName = fields[i].getName();
             if (fields[i].isAnnotationPresent(ForeignKey.class)){
+                stringBuilder.append(SQLConstant.FOREIGN_KEY);
+                stringBuilder.append(SQLConstant.SPACE);
+                stringBuilder.append(SQLConstant.OPEN_PARENTHESES);
+                stringBuilder.append(fieldName);
+                stringBuilder.append(SQLConstant.CLOSE_PARENTHESES);
                 stringBuilder.append(SQLConstant.SPACE);
                 stringBuilder.append(SQLConstant.REFERENCES);
                 stringBuilder.append(SQLConstant.SPACE);
@@ -89,9 +116,8 @@ public class Migrate {
                 stringBuilder.append(SQLConstant.OPEN_PARENTHESES);
                 stringBuilder.append(foreignKey.referenceColumn());
                 stringBuilder.append(SQLConstant.CLOSE_PARENTHESES);
+                stringBuilder.append(SQLConstant.CLOSE_PARENTHESES);
             }
-            stringBuilder.append(SQLConstant.COMMA);
-
         }
         stringBuilder.setLength(stringBuilder.length() - 1);
         stringBuilder.append(SQLConstant.CLOSE_PARENTHESES);

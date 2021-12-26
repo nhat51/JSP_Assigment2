@@ -5,7 +5,8 @@
 <%
     request.setCharacterEncoding("utf-8");
     JpaRepository<Category> repositoryCategory = new JpaRepository<>(Category.class);
-    ArrayList<Category> categories = (ArrayList<Category>) repositoryCategory.findAll();
+    ArrayList<Category> ListCategories = (ArrayList<Category>) repositoryCategory.findAll();
+
 %>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -37,12 +38,12 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <%
-                            for (int i = 0; i <categories.size();i++) {
+                            for (int i = 0; i <ListCategories.size();i++) {
                         %>
                         <li class="nav-item">
                             <a href="examples/invoice.html" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p><%= categories.get(i).getName()%></p>
+                                <p><%= ListCategories.get(i).getName()%></p>
                             </a>
                         </li>
                         <%

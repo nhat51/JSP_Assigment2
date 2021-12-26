@@ -63,6 +63,9 @@
                                     <button type="submit" class="btn btn-default">
                                         <a href="/admin/create" >Thêm món ăn mới</a>
                                     </button>
+                                    <button type="submit" class="btn btn-default">
+                                        <a href="/admin/list-category" >Danh sách danh mục món ăn</a>
+                                    </button>
                                 </div>
                             </div>
                             <!-- /.card-header -->
@@ -102,14 +105,14 @@
                                                         }
                                                     %>
                                                     <%
-                                                        if (list.get(i).getStatus() == 0){
+                                                        if (list.get(i).getStatus() == 2){
                                                     %>
                                                     <th>Dừng Bán</th>
                                                     <%
                                                         }
                                                     %>
                                                     <%
-                                                        if (list.get(i).getStatus() == -1){
+                                                        if (list.get(i).getStatus() == 3){
                                                     %>
                                                     <th>Đã xóa</th>
                                                     <%

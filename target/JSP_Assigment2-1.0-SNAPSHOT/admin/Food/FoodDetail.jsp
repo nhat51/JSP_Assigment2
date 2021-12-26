@@ -67,11 +67,11 @@
                                         <image src="<%= food.getThumbnail()%>" style="width: 300px"/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="Create">Price</label>
+                                        <label for="Create">Created at</label>
                                         <input type="text" class="form-control" value="<%= ConvertHelper.convertJavaDateToSqlDate(food.getCreated_at())%>" id="Create" readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label for="Update">Price</label>
+                                        <label for="Update">Updated at</label>
                                         <%
                                             if (food.getUpdated_at() == null){
                                         %>

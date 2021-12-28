@@ -2,7 +2,9 @@
 
 <%@ page import="com.jspassigment2.jsp_assigment2.entity.Food" %>
 <%@ page import="com.jspassigment2.jsp_assigment2.repository.JpaRepository" %>
-<%@ page import="com.jspassigment2.jsp_assigment2.entity.Category" %><%--
+<%@ page import="com.jspassigment2.jsp_assigment2.entity.Category" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--
   Created by IntelliJ IDEA.
   User: it
   Date: 12/6/2021
@@ -13,6 +15,8 @@
     request.setCharacterEncoding("UTF-8");
     ArrayList<Food> list = (ArrayList<Food>)request.getAttribute("product");
     JpaRepository<Category> repository = new JpaRepository<>(Category.class);
+    int totalPage = (int) request.getAttribute("totalPage");
+    int pageNumber = (int) request.getAttribute("page");
 
 %>
 <!DOCTYPE html>
@@ -58,7 +62,6 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Products</h3>
-
                                 <div class="card-tools">
                                     <button type="submit" class="btn btn-default">
                                         <a href="/admin/create" >Thêm món ăn mới</a>
@@ -84,9 +87,9 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        <%
-                                            for (int i = 0; i < list.size(); i++){
-                                        %>
+                                      <%
+                                          for (int i = 0; i < list.size(); i++) {
+                                      %>
                                                 <tr>
                                                     <th><%= list.get(i).getId()%></th>
                                                     <th><%= list.get(i).getName()%></th>
@@ -99,7 +102,7 @@
                                                         if (list.get(i).getStatus() == 1){
                                                     %>
                                                     <th>
-                                                        Đang Bán
+                                                        <p style="color: #00bb00">Đang Bán</p>
                                                     </th>
                                                     <%
                                                         }
@@ -107,14 +110,18 @@
                                                     <%
                                                         if (list.get(i).getStatus() == 2){
                                                     %>
-                                                    <th>Dừng Bán</th>
+                                                    <th>
+                                                        <p style="color: indianred">Dừng Bán</p>
+                                                    </th>
                                                     <%
                                                         }
                                                     %>
                                                     <%
                                                         if (list.get(i).getStatus() == 3){
                                                     %>
-                                                    <th>Đã xóa</th>
+                                                    <th>
+                                                        <p style="color:red;">Đã xóa</p>
+                                                    </th>
                                                     <%
                                                         }
                                                     %>
@@ -129,6 +136,21 @@
                                         %>
                                     </tbody>
                                 </table>
+                                <div class="ml-3 mt-3">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination">
+                                            <li class="page-item"><a class="page-link" href="">Previous</a></li>
+                                            <%
+                                                for (int i = 1; i <= totalPage; i++) {
+                                            %>
+                                            <li class="page-item"><a class="page-link" href="/admin/list?page=<%=i%>"><%= i%></a></li>
+                                            <%
+                                                }
+                                            %>
+                                            <li class="page-item"><a class="page-link" href="">Next</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
                             </div>
                             <!-- /.card-body -->
                         </div>

@@ -11,7 +11,7 @@
 <%
     request.setCharacterEncoding("UTF-8");
     ArrayList<Category> list = (ArrayList<Category>)request.getAttribute("categories");
-    /*list = new ArrayList<>();*/
+
 
 %>
 <!DOCTYPE html>
@@ -128,7 +128,7 @@
 <script src="../resources/dist/js/demo.js"></script>
 <script>
     function deleteProduct(id){
-        if (confirm("bạn có muốn xóa sản phầm")){
+        if (confirm("bạn có muốn xóa danh mục")){
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function (){
                 if (xhr.readyState == 4 && xhr.status == 200){
@@ -136,7 +136,7 @@
                     window.location.reload();
                 }
             };
-            xhr.open('DELETE', '/admin/delete-product?id=' + id);
+            xhr.open('DELETE', '/admin/delete-category?id=' + id);
             xhr.send();
         }
     }

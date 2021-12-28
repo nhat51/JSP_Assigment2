@@ -15,6 +15,7 @@
   HashMap<String, String> errors = (HashMap<String, String>) request.getAttribute("errors");
   ArrayList<Category> categories = (ArrayList<Category>) request.getAttribute("categories");
 
+
   if (food == null){
     food = new Food();
   }
@@ -120,7 +121,8 @@
                     <div class="form-group">
                       <label for="Category">Category</label>
                       <select name="category" id="Category" class="form-control" aria-label=".form-select-sm example">
-                        <%
+                      <option value="0" selected>Chọn danh mục</option>
+                      <%
                           for (int i = 0; i < categories.size(); i++) {
                         %>
                         <option name="category" value="<%= categories.get(i).getId()%>"><%= categories.get(i).getName()%></option>
@@ -128,6 +130,13 @@
                           }
                         %>
                       </select>
+                      <%
+                        if (errors.containsKey("category")) {
+                      %>
+                      <span class="badge bg-danger"><%= errors.get("category")%></span>
+                      <%
+                        }
+                      %>
                     </div>
                 </div>
                 <!-- /.card-body -->

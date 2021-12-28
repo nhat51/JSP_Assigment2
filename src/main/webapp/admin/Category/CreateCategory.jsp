@@ -10,8 +10,7 @@
 --%>
 <%
   request.setCharacterEncoding("utf-8");
-  Food food = (Food) request.getAttribute("product");
-  food = new Food();
+
 %>
 
 <!DOCTYPE html>

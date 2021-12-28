@@ -47,6 +47,8 @@ public class CreateNewFoodServlet extends HttpServlet {
                 HashMap<String,String> error = product.getError();
                 req.setAttribute("errors",error);
                 req.setAttribute("food",product);
+                List<Category> categories = repositoryCategory.findAll();
+                req.setAttribute("categories",categories);
                 req.getRequestDispatcher("/admin/Food/CreateFood.jsp").forward(req,resp);
             }
 

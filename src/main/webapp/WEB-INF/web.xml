@@ -65,6 +65,23 @@
         <url-pattern>/admin/create-category</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>DeleteCategory</servlet-name>
+        <servlet-class>com.jspassigment2.jsp_assigment2.controller.Category.DeleteCategory</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteCategory</servlet-name>
+        <url-pattern>/admin/delete-category</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdateCategory</servlet-name>
+        <servlet-class>com.jspassigment2.jsp_assigment2.controller.Category.UpdateCategory</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateCategory</servlet-name>
+        <url-pattern>/admin/update-category</url-pattern>
+    </servlet-mapping>
     <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>

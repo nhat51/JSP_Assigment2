@@ -62,6 +62,21 @@ public class Food {
         this.categoryId = categoryId;
     }
 
+    @Override
+    public String toString() {
+        return "Food{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", thumbnail='" + thumbnail + '\'' +
+                ", status=" + status +
+                ", created_at=" + created_at +
+                ", updated_at=" + updated_at +
+                ", categoryId=" + categoryId +
+                '}';
+    }
+
     public int getId() {
         return id;
     }
@@ -155,6 +170,9 @@ public class Food {
         }
         if (thumbnail == null || thumbnail.length() == 0 ){
             errors.put("thumbnail","Vui lòng thêm ảnh cho sản phẩm");
+        }
+        if (categoryId == 0 ){
+            errors.put("category","Vui lòng chọn danh mục cho sản phẩm");
         }
 
         return errors;

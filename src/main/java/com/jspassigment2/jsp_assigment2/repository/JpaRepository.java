@@ -367,6 +367,85 @@ public class JpaRepository<T> {
         return false;
     }
 
+    public int countData(){
+        try {
+            Connection connection = ConnectionHelper.getConnection();
+            if (connection == null) {
+                throw new EntityException("Can not connect to datababse!");
+            }
+            if (!isEntity()) {
+                throw new EntityException("Not an entity class");
+            }
+            String tableName = clazz.getAnnotation(Entity.class).tableName();
+            StringBuilder stringCmd = new StringBuilder();
+            stringCmd.append(SQLConstant.SELECT);
+            stringCmd.append(SQLConstant.SPACE);
+            stringCmd.append(SQLConstant.COUNT);
+            stringCmd.append(SQLConstant.OPEN_PARENTHESES);
+            stringCmd.append(SQLConstant.ASTERISK);
+            stringCmd.append(SQLConstant.CLOSE_PARENTHESES);
+            stringCmd.append(SQLConstant.SPACE);
+            stringCmd.append(SQLConstant.AS);
+            stringCmd.append(SQLConstant.SPACE);
+            stringCmd.append("total");
+            stringCmd.append(SQLConstant.SPACE);
+            stringCmd.append(SQLConstant.FROM);
+            stringCmd.append(SQLConstant.SPACE);
+            stringCmd.append(tableName);
+            //execute command
+            System.out.println(stringCmd.toString());
+            PreparedStatement preparedStatement = connection.prepareStatement(stringCmd.toString());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt("total");
+        } catch (EntityException | SQLException error) {
+            System.err.printf("Find all error %s\n", error.getMessage());
+            error.printStackTrace();
+        }
+        return 0;
+    }
+
+    public List<T> paginate(int limit,int page){
+        List<T> list = new ArrayList<>();
+        int offset = (page - 1) * limit;
+        try {
+            Connection connection = ConnectionHelper.getConnection();
+            if (connection == null) {
+                throw new EntityException("Can not connect to datababse!");
+            }
+            if (!isEntity()) {
+                throw new EntityException("Not an entity class");
+            }
+            String tableName = clazz.getAnnotation(Entity.class).tableName();
+            StringBuilder stringCmd = new StringBuilder();
+            stringCmd.append(SQLConstant.SELECT_ASTERISK);
+            stringCmd.append(SQLConstant.SPACE);
+            stringCmd.append(SQLConstant.FROM);
+            stringCmd.append(SQLConstant.SPACE);
+            stringCmd.append(tableName);
+            stringCmd.append(SQLConstant.SPACE);
+            stringCmd.append(SQLConstant.LIMIT);
+            stringCmd.append(SQLConstant.SPACE);
+            stringCmd.append(limit);
+            stringCmd.append(SQLConstant.SPACE);
+            stringCmd.append(SQLConstant.OFFSET);
+            stringCmd.append(SQLConstant.SPACE);
+            stringCmd.append(offset);
+            //execute command
+            PreparedStatement preparedStatement = connection.prepareStatement(stringCmd.toString());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<T> fullFiled = fullFillObject(resultSet);
+            if (fullFiled.size() == 0) {
+                throw new EntityException("Not Found");
+            }
+            list = fullFiled;
+        } catch (EntityException | InstantiationException | IllegalAccessException | SQLException error) {
+            System.err.printf("Find all error %s\n", error.getMessage());
+            error.printStackTrace();
+        }
+        return list;
+    }
+
     public List<T> where(Object expr1, String operator, Object expr2) {
         //SELECT * FROM {tableName} WHERE {expr1} {operator} {expr2}
         //build sql command

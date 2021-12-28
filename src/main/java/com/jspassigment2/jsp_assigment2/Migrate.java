@@ -19,14 +19,14 @@ import java.util.*;
 
 public class Migrate {
     public static void main(String[] args) {
-      /*  Reflections reflections =new Reflections("com.jspassigment2.jsp_assigment2");
+        Reflections reflections =new Reflections("com.jspassigment2.jsp_assigment2");
         Set<Class<?>> annotated = reflections.getTypesAnnotatedWith(Entity.class);
         for (Class<?> clazz :
                 annotated) {
             // thực hiện migrate cho class đó.
             doMigrate(clazz);
         }
-*/      try {
+      /*try {
             Date date = new Date();
             JpaRepository<Food> foodJpaRepository = new JpaRepository<>(Food.class);
             Food food = new Food("", 1200, "", "image", 1, date, 0);
@@ -42,7 +42,8 @@ public class Migrate {
             }
         }catch (Exception exception){
             System.out.println(exception.getMessage());
-        }
+        }*/
+
     }
 
     static void doMigrate(Class clazz) {

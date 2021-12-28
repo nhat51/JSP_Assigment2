@@ -1,7 +1,8 @@
 
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.jspassigment2.jsp_assigment2.entity.Food" %><%--
+<%@ page import="com.jspassigment2.jsp_assigment2.entity.Food" %>
+<%@ page import="com.jspassigment2.jsp_assigment2.entity.Category" %><%--
   Created by IntelliJ IDEA.
   User: it
   Date: 12/7/2021
@@ -10,7 +11,7 @@
 --%>
 <%
   request.setCharacterEncoding("utf-8");
-
+  Category category = (Category) request.getAttribute("category");
 %>
 
 <!DOCTYPE html>
@@ -51,15 +52,15 @@
             <!-- general form elements -->
             <div class="card card-primary">
               <!-- form start -->
-              <form action="/admin/create-category" method="post">
+              <form action="/admin/update-category" method="post">
                 <div class="card-body">
-                  <%-- <div class="form-group" hidden>
-                     <label for="ID"> ID</label>
-                     <input type="text" name="ID" class="form-control" id="ID">
-                   </div>--%>
+                   <div class="form-group" hidden>
+                     <label for="ID"></label>
+                     <input type="text" name="id" value="<%= category.getId()%>" class="form-control" id="ID">
+                   </div>
                   <div class="form-group">
                     <label for="ProductName">Category Name</label>
-                    <input type="text" name="name" class="form-control" <%= food.getName()%>  id="ProductName">
+                    <input type="text" name="name" class="form-control" value="<%= category.getName()%> "   id="ProductName">
                   </div>
                 </div>
                 <!-- /.card-body -->

@@ -5,7 +5,6 @@ import com.jspassigment2.jsp_assigment2.annotation.Entity;
 import com.jspassigment2.jsp_assigment2.annotation.Id;
 import com.jspassigment2.jsp_assigment2.util.SQLDataTypes;
 
-import java.util.Date;
 @Entity(tableName = "categories")
 public class Category {
     @Id(autoIncrement = true)

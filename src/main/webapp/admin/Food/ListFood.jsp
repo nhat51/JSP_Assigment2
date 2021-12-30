@@ -139,15 +139,37 @@
                                 <div class="ml-3 mt-3">
                                     <nav aria-label="Page navigation example">
                                         <ul class="pagination">
-                                            <li class="page-item"><a class="page-link" href="">Previous</a></li>
+                                            <%
+                                                if (pageNumber > 1) {
+                                            %>
+                                            <li class="page-item" ><a class="page-link" href="/admin/list?page=<%= pageNumber - 1 %>">Previous</a></li>
+                                            <%
+                                                }
+                                            %>
                                             <%
                                                 for (int i = 1; i <= totalPage; i++) {
+                                            %>
+                                            <%
+                                                if(pageNumber == i){
+                                            %>
+                                            <li class="page-item active"><a class="page-link" href="/admin/list?page=<%=i%>"><%= i%></a></li>
+                                            <%
+                                                }else {
                                             %>
                                             <li class="page-item"><a class="page-link" href="/admin/list?page=<%=i%>"><%= i%></a></li>
                                             <%
                                                 }
                                             %>
-                                            <li class="page-item"><a class="page-link" href="">Next</a></li>
+                                            <%
+                                                }
+                                            %>
+                                            <%
+                                                if (pageNumber < totalPage) {
+                                            %>
+                                            <li class="page-item"><a class="page-link" href="/admin/list?page=<%= pageNumber + 1 %>">Next</a></li>
+                                            <%
+                                                }
+                                            %>
                                         </ul>
                                     </nav>
                                 </div>

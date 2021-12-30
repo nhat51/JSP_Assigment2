@@ -5,6 +5,7 @@ import com.jspassigment2.jsp_assigment2.annotation.Entity;
 import com.jspassigment2.jsp_assigment2.annotation.ForeignKey;
 import com.jspassigment2.jsp_assigment2.annotation.Id;
 import com.jspassigment2.jsp_assigment2.util.SQLDataTypes;
+import com.jspassigment2.jsp_assigment2.util.ValidationUtil;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -170,6 +171,8 @@ public class Food {
         }
         if (thumbnail == null || thumbnail.length() == 0 ){
             errors.put("thumbnail","Vui lòng thêm ảnh cho sản phẩm");
+        } else if (!ValidationUtil.checkUrl(thumbnail)){
+            errors.put("thumbnail","Ảnh sai định dạng vui lòng nhập 1 đường link");
         }
         if (categoryId == 0 ){
             errors.put("category","Vui lòng chọn danh mục cho sản phẩm");

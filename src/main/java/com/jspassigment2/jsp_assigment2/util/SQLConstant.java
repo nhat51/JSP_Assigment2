@@ -23,7 +23,9 @@ public class SQLConstant {
     public static final String DELETE = "DELETE";
     public static final String COUNT = "COUNT";
     public static final String AS = "AS";
+    public static final String ADD= "ADD";
 
+    public static final String ALTER_TABLE = "ALTER TABLE";
     public static final String FOREIGN_KEY = "FOREIGN KEY";
     public static final String REFERENCES = "REFERENCES";
     public static final String DROP = "DROP";

@@ -17,7 +17,7 @@
 <html lang="en">
 <head>
   <jsp:include page="/include/head.jsp">
-    <jsp:param name="title" value="Tạo sản phẩm"/>
+    <jsp:param name="title" value="Tạo Danh Mục"/>
   </jsp:include>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -36,8 +36,8 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">List Products</li>
+              <li class="breadcrumb-item"><a href="/admin/list">Home</a></li>
+              <li class="breadcrumb-item active">Thêm Danh Mục</li>
             </ol>
           </div>
         </div>
@@ -59,7 +59,7 @@
                    </div>--%>
                   <div class="form-group">
                     <label for="ProductName">Category Name</label>
-                    <input type="text" name="name" class="form-control" <%= food.getName()%>  id="ProductName">
+                    <input type="text" name="name" class="form-control" id="ProductName">
                   </div>
                 </div>
                 <!-- /.card-body -->
